@@ -1,0 +1,6 @@
+{
+  "patient_id": "患者编号",
+  "timestamp": "测量时间",
+  "glucose": "血糖读数",
+  "unit": "血糖单位"
+}

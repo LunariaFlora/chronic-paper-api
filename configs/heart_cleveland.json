@@ -1,0 +1,16 @@
+{
+  "task": "heart_disease_status",
+  "recommendation_task": "heart",
+  "source": "https://archive.ics.uci.edu/dataset/45/heart+disease",
+  "interpretation": "UCI Cleveland心脏病状态二分类；0为原标签0，1为原标签1至4；是当前检查状态，不是未来发病概率。数据仅303条，结果只供研究。",
+  "separator": ",",
+  "columns": ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"],
+  "target": "num",
+  "numeric": ["age", "trestbps", "chol", "thalach", "oldpeak", "ca"],
+  "categorical": ["sex", "cp", "fbs", "restecg", "exang", "slope", "thal"],
+  "categorical_numeric": ["sex", "cp", "fbs", "restecg", "exang", "slope", "thal"],
+  "allow_missing": ["ca", "thal"],
+  "ranges": {"age": [1, 120], "trestbps": [40, 300], "chol": [30, 1000], "thalach": [20, 300], "oldpeak": [-10, 20], "ca": [0, 3]},
+  "enums": {"sex": ["0.0", "1.0"], "cp": ["1.0", "2.0", "3.0", "4.0"], "fbs": ["0.0", "1.0"], "restecg": ["0.0", "1.0", "2.0"], "exang": ["0.0", "1.0"], "slope": ["1.0", "2.0", "3.0"], "thal": ["3.0", "6.0", "7.0"]},
+  "label_map": {"0":"0", "1":"1", "2":"1", "3":"1", "4":"1"}
+}

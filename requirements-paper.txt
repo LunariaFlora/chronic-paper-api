@@ -1,0 +1,5 @@
+# Kept for environments that add their own torch-based models next to the
+# classifier adapter. The adapter itself does not need a torch wheel.
+# CPU wheels also work on machines without a GPU. Avoid multi-GB CUDA dependencies.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0+cpu

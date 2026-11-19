@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+datasets/*
+!datasets/README.md
+!datasets/*.json
+work/
+outputs/
+artifacts/
+
+service_data/
+.env
+
+service_data_v2/
+

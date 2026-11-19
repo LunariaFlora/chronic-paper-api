@@ -1,0 +1,14 @@
+services:
+  chronic:
+    build: .
+    ports:
+      - "127.0.0.1:8765:8765"
+    environment:
+      CHRONIC_API_TOKEN: ${CHRONIC_API_TOKEN:?Set CHRONIC_API_TOKEN in .env}
+      CHRONIC_TIMEZONE: Asia/Shanghai
+      CHRONIC_COOKIE_SECURE: ${CHRONIC_COOKIE_SECURE:-0}
+    volumes:
+      - chronic-data:/data
+    restart: unless-stopped
+volumes:
+  chronic-data:

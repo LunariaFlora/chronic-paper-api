@@ -1,0 +1,11 @@
+{
+  "task": "your_classification_task",
+  "recommendation_task": "unsupported",
+  "source": "请填写数据来源",
+  "interpretation": "请填写标签的准确含义、适用人群和局限；当前状态分类不能写成未来发病预测",
+  "target": "disease",
+  "numeric": ["age", "weight"],
+  "categorical": ["symptom_1", "symptom_2", "symptom_3"],
+  "allow_missing": [],
+  "ranges": {"age": [0, 120], "weight": [1, 400]}
+}

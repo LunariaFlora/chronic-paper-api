@@ -1,0 +1,142 @@
+{
+  "files": [
+    {
+      "id": 42966622,
+      "name": "diabetes_datasets.zip",
+      "size": 3738354,
+      "is_link_only": false,
+      "download_url": "https://ndownloader.figshare.com/files/42966622",
+      "supplied_md5": "4bfb61cfa506b48155fd9e841ee48e21",
+      "computed_md5": "4bfb61cfa506b48155fd9e841ee48e21",
+      "mimetype": "application/zip"
+    }
+  ],
+  "folder_structure": {},
+  "authors": [
+    {
+      "id": 14138055,
+      "full_name": "Qinpei Zhao",
+      "first_name": "Qinpei",
+      "last_name": "Zhao",
+      "is_active": true,
+      "url_name": "Qinpei_Zhao",
+      "orcid_id": ""
+    },
+    {
+      "id": 13194036,
+      "full_name": "Jinhao Zhu",
+      "first_name": "Jinhao",
+      "last_name": "Zhu",
+      "is_active": true,
+      "url_name": "Jinhao_Zhu",
+      "orcid_id": ""
+    },
+    {
+      "id": 13854291,
+      "full_name": "Congrong Wang",
+      "first_name": "Congrong",
+      "last_name": "Wang",
+      "is_active": false,
+      "url_name": "_",
+      "orcid_id": ""
+    },
+    {
+      "id": 12304052,
+      "full_name": "Weixiong Rao",
+      "first_name": "Weixiong",
+      "last_name": "Rao",
+      "is_active": false,
+      "url_name": "_",
+      "orcid_id": ""
+    }
+  ],
+  "custom_fields": [],
+  "figshare_url": "https://figshare.com/articles/dataset/diabetes_datasets_zip/21600933",
+  "download_disabled": false,
+  "description": "<p>The datasets ShanghaiT1DM and ShanghaiT2DM comprise two folders named \"Shanghai_T1DM\" and \"Shanghai_T2DM\" and two summary sheets named \"Shanghai_T1DM\\_Summary\" and \"Shanghai_T2DM\\_Summary\".</p>",
+  "funding": "National Natural Science Foundation of China",
+  "funding_list": [
+    {
+      "id": 16005038,
+      "title": "National Natural Science Foundation of China",
+      "grant_code": "S1221002",
+      "funder_name": "National Natural Science Foundation of China",
+      "is_user_defined": 0,
+      "url": "https://app.dimensions.ai/details/grant/grant.8378391"
+    },
+    {
+      "id": 22852581,
+      "title": "the Shanghai Municipal Science and Technology Major Project (2021SHZDZX0100)",
+      "grant_code": "",
+      "funder_name": null,
+      "is_user_defined": 1
+    }
+  ],
+  "version": 5,
+  "status": "public",
+  "size": 3738354,
+  "created_date": "2023-10-30T02:11:23Z",
+  "modified_date": "2023-10-30T02:11:24Z",
+  "is_public": true,
+  "is_confidential": false,
+  "is_metadata_record": false,
+  "confidential_reason": "",
+  "metadata_reason": "",
+  "license": {
+    "value": 1,
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "tags": [
+    "diabetes",
+    "clinical characteristics",
+    "lab measurements",
+    "machine learning"
+  ],
+  "keywords": [
+    "diabetes",
+    "clinical characteristics",
+    "lab measurements",
+    "machine learning"
+  ],
+  "categories": [
+    {
+      "id": 24559,
+      "title": "Clinical sciences not elsewhere classified",
+      "parent_id": 24475,
+      "path": "/24457/24475/24559",
+      "source_id": "320299",
+      "taxonomy_id": 100
+    }
+  ],
+  "references": [],
+  "has_linked_file": false,
+  "citation": "Zhao, Qinpei; Zhu, Jinhao; Wang, Congrong; Rao, Weixiong (2022). diabetes_datasets.zip. figshare. Dataset. https://doi.org/10.6084/m9.figshare.21600933.v5",
+  "related_materials": [],
+  "is_embargoed": false,
+  "embargo_date": null,
+  "embargo_type": "file",
+  "embargo_title": "",
+  "embargo_reason": "",
+  "embargo_options": [],
+  "id": 21600933,
+  "title": "diabetes_datasets.zip",
+  "doi": "10.6084/m9.figshare.21600933.v5",
+  "handle": "",
+  "url": "https://api.figshare.com/v2/articles/21600933",
+  "published_date": "2023-10-30T02:11:23Z",
+  "thumb": "",
+  "defined_type": 3,
+  "defined_type_name": "dataset",
+  "group_id": null,
+  "url_private_api": "https://api.figshare.com/v2/account/articles/21600933",
+  "url_public_api": "https://api.figshare.com/v2/articles/21600933",
+  "url_private_html": "https://figshare.com/account/articles/21600933",
+  "url_public_html": "https://figshare.com/articles/dataset/diabetes_datasets_zip/21600933",
+  "timeline": {
+    "posted": "2023-10-30T02:11:23",
+    "firstOnline": "2022-11-22"
+  },
+  "resource_title": null,
+  "resource_doi": null
+}

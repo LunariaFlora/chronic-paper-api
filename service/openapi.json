@@ -1,0 +1,1660 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "慢病预测 API",
+    "description": "论文模型适配：提交检查表，直接返回结果。原有慢病分析：建立用户 → 上传记录 → 分析 → 查询结果。点击 Authorize 填入项目令牌，再用 Try it out 试调用。",
+    "version": "3.1.0"
+  },
+  "paths": {
+    "/api/v2/users": {
+      "get": {
+        "tags": [
+          "1. 用户档案"
+        ],
+        "summary": "读取用户列表",
+        "operationId": "list_users_api_v2_users_get",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  },
+                  "required": []
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "1. 用户档案"
+        ],
+        "summary": "建立用户，返回用户编号",
+        "operationId": "users_api_v2_users_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/users/{uid}": {
+      "get": {
+        "tags": [
+          "1. 用户档案"
+        ],
+        "summary": "读取指定用户的基本信息",
+        "operationId": "user_api_v2_users__uid__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Uid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_healthz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/imports": {
+      "post": {
+        "tags": [
+          "2. 导入数据"
+        ],
+        "summary": "上传CSV或Excel，自动识别数据",
+        "operationId": "upload_api_v2_imports_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_api_v2_imports_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Import"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/imports/{iid}/rows": {
+      "get": {
+        "tags": [
+          "2. 导入数据"
+        ],
+        "summary": "预览文件中的数据行",
+        "operationId": "import_rows_api_v2_imports__iid__rows_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "iid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Iid"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "从第几行开始，0表示第一行",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "从第几行开始，0表示第一行"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/records": {
+      "post": {
+        "tags": [
+          "2. 导入数据"
+        ],
+        "summary": "直接提交血糖JSON记录（实验功能）",
+        "operationId": "device_records_api_v2_records_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Import"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/analyses": {
+      "post": {
+        "tags": [
+          "3. 模型计算与结果"
+        ],
+        "summary": "提交分析，返回分析编号",
+        "operationId": "submit_api_v2_analyses_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "status_url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": []
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/analyses/{aid}": {
+      "get": {
+        "tags": [
+          "3. 模型计算与结果"
+        ],
+        "summary": "查询计算状态及完整报告",
+        "operationId": "get_analysis_api_v2_analyses__aid__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "title": "Aid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Analysis"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/users/{uid}/analyses": {
+      "get": {
+        "tags": [
+          "3. 模型计算与结果"
+        ],
+        "summary": "读取用户分析历史",
+        "operationId": "history_api_v2_users__uid__analyses_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "title": "Uid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "analyses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Analysis"
+                      }
+                    }
+                  },
+                  "required": []
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/users/{uid}/integration": {
+      "get": {
+        "tags": [
+          "4. 多场景读取"
+        ],
+        "summary": "读取用户档案及关联结果",
+        "operationId": "integration_v2_api_v2_users__uid__integration_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "title": "Uid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "schema_version": {
+                      "type": "string"
+                    },
+                    "module": {
+                      "type": "string"
+                    },
+                    "user_id": {
+                      "type": "string"
+                    },
+                    "profile": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Analysis"
+                      }
+                    }
+                  },
+                  "required": []
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/analyses/{aid}/download": {
+      "get": {
+        "tags": [
+          "3. 模型计算与结果"
+        ],
+        "summary": "下载逐行计算结果CSV",
+        "operationId": "download_v2_api_v2_analyses__aid__download_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "title": "Aid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/templates/{kind}": {
+      "get": {
+        "tags": [
+          "2. 导入数据"
+        ],
+        "summary": "下载输入模板：heart、survey或glucose",
+        "operationId": "template_api_v2_templates__kind__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "title": "Kind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/paper-models": {
+      "get": {
+        "tags": [
+          "论文算法"
+        ],
+        "summary": "查看两套论文算法、字段和模型版本",
+        "operationId": "catalog_api_v2_paper_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/hypertension/predict": {
+      "post": {
+        "tags": [
+          "论文算法"
+        ],
+        "summary": "高血压分类：输入一条或多条检查记录",
+        "operationId": "hypertension_api_v2_hypertension_predict_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HypertensionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassificationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/hypertension/predict-file": {
+      "post": {
+        "tags": [
+          "论文算法"
+        ],
+        "summary": "高血压分类：上传整张 CSV/TSV，最多 1000 行",
+        "operationId": "hypertension_file_api_v2_hypertension_predict_file_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_hypertension_file_api_v2_hypertension_predict_file_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassificationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisInput": {
+        "properties": {
+          "import_id": {
+            "type": "string",
+            "title": "Import Id",
+            "description": "上传文件或JSON记录后返回的id"
+          },
+          "row": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Row",
+            "description": "多行独立检查时选择当前用户对应行，从0开始"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "mmol/L",
+                  "mg/dL"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit",
+            "description": "原始血糖未写明单位时补充"
+          },
+          "advice_engine": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "rules",
+                  "kimi"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Advice Engine",
+            "description": "kimi使用Kimi生成建议；rules使用本地规则。有密钥时默认kimi"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "import_id"
+        ],
+        "title": "AnalysisInput"
+      },
+      "Body_blood_pressure_api_v2_blood_pressure_estimate_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "description": "UTF-8 CSV/TSV，t 和六路信号；不是测量目录表"
+          },
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "auscultatory",
+              "oscillometric"
+            ],
+            "title": "Protocol"
+          },
+          "unavailable_groups": {
+            "type": "string",
+            "title": "Unavailable Groups",
+            "description": "整组缺失时填写 ekg,optical,pressure,accel 中的名称，逗号分隔",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "protocol"
+        ],
+        "title": "Body_blood_pressure_api_v2_blood_pressure_estimate_post"
+      },
+      "Body_hypertension_file_api_v2_hypertension_predict_file_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_hypertension_file_api_v2_hypertension_predict_file_post"
+      },
+      "Body_upload_api_v2_imports_post": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id",
+            "description": "建立用户后返回的id"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "description": "该用户的CSV或Excel检查记录"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "file"
+        ],
+        "title": "Body_upload_api_v2_imports_post"
+      },
+      "ClassificationResult": {
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "title": "Model Id"
+          },
+          "target": {
+            "type": "string",
+            "title": "Target"
+          },
+          "threshold": {
+            "type": "number",
+            "title": "Threshold"
+          },
+          "meaning": {
+            "type": "string",
+            "title": "Meaning"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "predictions": {
+            "items": {
+              "$ref": "#/components/schemas/ClassificationRow"
+            },
+            "type": "array",
+            "title": "Predictions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "model_id",
+          "target",
+          "threshold",
+          "meaning",
+          "count",
+          "predictions"
+        ],
+        "title": "ClassificationResult"
+      },
+      "ClassificationRow": {
+        "properties": {
+          "row": {
+            "type": "integer",
+            "title": "Row"
+          },
+          "risk_label": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "title": "Risk Label"
+          },
+          "risk_probability": {
+            "type": "number",
+            "title": "Risk Probability"
+          },
+          "imputed_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Imputed Fields"
+          }
+        },
+        "type": "object",
+        "required": [
+          "row",
+          "risk_label",
+          "risk_probability",
+          "imputed_fields"
+        ],
+        "title": "ClassificationRow"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HypertensionInput": {
+        "properties": {
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/HypertensionRecord"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "minItems": 1,
+            "title": "Records"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "records"
+        ],
+        "title": "HypertensionInput",
+        "example": {
+          "records": [
+            {
+              "BMI": 25,
+              "BPMeds": 0,
+              "age": 50,
+              "cigsPerDay": 0,
+              "currentSmoker": 0,
+              "diaBP": 80,
+              "diabetes": 0,
+              "glucose": 90,
+              "heartRate": 70,
+              "male": 1,
+              "sysBP": 130,
+              "totChol": 200
+            }
+          ]
+        }
+      },
+      "HypertensionRecord": {
+        "properties": {
+          "male": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Male"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 130.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "currentSmoker": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currentsmoker"
+          },
+          "cigsPerDay": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 200.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cigsperday"
+          },
+          "BPMeds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bpmeds"
+          },
+          "diabetes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Diabetes"
+          },
+          "totChol": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 2000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Totchol",
+            "description": "mg/dL"
+          },
+          "sysBP": {
+            "type": "number",
+            "maximum": 400.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Sysbp",
+            "description": "已测得的收缩压，mmHg"
+          },
+          "diaBP": {
+            "type": "number",
+            "maximum": 300.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Diabp",
+            "description": "已测得的舒张压，mmHg"
+          },
+          "BMI": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 150.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bmi"
+          },
+          "heartRate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 350.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Heartrate"
+          },
+          "glucose": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 2000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Glucose",
+            "description": "mg/dL，不是 mmol/L"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "male",
+          "age",
+          "currentSmoker",
+          "cigsPerDay",
+          "BPMeds",
+          "diabetes",
+          "totChol",
+          "sysBP",
+          "diaBP",
+          "BMI",
+          "heartRate",
+          "glucose"
+        ],
+        "title": "HypertensionRecord"
+      },
+      "Measurement": {
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp",
+            "description": "含时区的测量时间",
+            "examples": [
+              "2026-11-02T08:00:00+08:00"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "title": "Value",
+            "description": "该时刻的血糖值"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "timestamp",
+          "value"
+        ],
+        "title": "Measurement"
+      },
+      "RecordInput": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mmol/L",
+              "mg/dL"
+            ],
+            "title": "Unit"
+          },
+          "measurements": {
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            },
+            "type": "array",
+            "maxItems": 100000,
+            "minItems": 1,
+            "title": "Measurements"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "user_id",
+          "unit",
+          "measurements"
+        ],
+        "title": "RecordInput"
+      },
+      "UserInput": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "description": "姓名",
+            "examples": [
+              "张三"
+            ]
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 130.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age",
+            "description": "实际年龄（岁）"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "title": "Sex",
+            "default": "unknown"
+          },
+          "height_cm": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 260.0,
+                "minimum": 20.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm",
+            "description": "身高，厘米"
+          },
+          "weight_kg": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 500.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg",
+            "description": "体重，千克"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "UserInput"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "number"
+          },
+          "sex": {
+            "type": "string"
+          },
+          "height_cm": {
+            "type": "number"
+          },
+          "weight_kg": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "Import": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "glucose",
+              "survey",
+              "heart"
+            ]
+          },
+          "rows": {
+            "type": "integer"
+          },
+          "needs_unit": {
+            "type": "boolean"
+          },
+          "needs_row": {
+            "type": "boolean"
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "preview": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "rows"
+        ]
+      },
+      "AnalysisRequest": {
+        "type": "object",
+        "properties": {
+          "import_id": {
+            "type": "string"
+          },
+          "row": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mmol/L",
+              "mg/dL"
+            ]
+          },
+          "advice_engine": {
+            "type": "string",
+            "enum": [
+              "rules",
+              "kimi"
+            ],
+            "description": "有KIMI_API_KEY时默认kimi，否则rules"
+          }
+        },
+        "required": [
+          "import_id"
+        ]
+      },
+      "Records": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mmol/L",
+              "mg/dL"
+            ]
+          },
+          "measurements": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100000,
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "timestamp",
+                "value"
+              ]
+            }
+          }
+        },
+        "required": [
+          "user_id",
+          "unit",
+          "measurements"
+        ]
+      },
+      "Report": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "record_count": {
+            "type": "integer"
+          },
+          "predicted_count": {
+            "type": "integer"
+          },
+          "profile_snapshot": {
+            "$ref": "#/components/schemas/User"
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": [
+                    "number",
+                    "string",
+                    "null"
+                  ]
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            }
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": []
+            }
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "minutes": {
+                  "type": "integer"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            }
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": []
+      },
+      "Analysis": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "import_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "completed",
+              "needs_data",
+              "failed"
+            ]
+          },
+          "created": {
+            "type": "string"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Report"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": []
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

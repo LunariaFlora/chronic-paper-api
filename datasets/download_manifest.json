@@ -1,0 +1,81 @@
+[
+  {
+    "dataset": "cdc_diabetes",
+    "url": "https://www.kaggle.com/api/v1/datasets/download/alexteboul/diabetes-health-indicators-dataset",
+    "downloaded_at": "2026-10-22",
+    "bytes": 6324278,
+    "sha256": "ecbd65727a3b9b730bfd3ba547a181767522f1188fb16077e885945c1030f046",
+    "files": [
+      "diabetes_012_health_indicators_BRFSS2015.csv",
+      "diabetes_binary_5050split_health_indicators_BRFSS2015.csv",
+      "diabetes_binary_health_indicators_BRFSS2015.csv"
+    ],
+    "status": "downloaded"
+  },
+  {
+    "dataset": "diabetes_100k",
+    "url": "https://www.kaggle.com/api/v1/datasets/download/iammustafatz/diabetes-prediction-dataset",
+    "downloaded_at": "2026-10-22",
+    "bytes": 751272,
+    "sha256": "7a0c879f303c49c3778639558c214cdce885a69c528eb08d98c9d065d14c79d9",
+    "files": [
+      "diabetes_prediction_dataset.csv"
+    ],
+    "status": "downloaded"
+  },
+  {
+    "dataset": "cardiovascular_70k",
+    "url": "https://www.kaggle.com/api/v1/datasets/download/sulianova/cardiovascular-disease-dataset",
+    "downloaded_at": "2026-10-22",
+    "bytes": 760066,
+    "sha256": "b78ff607480810c3e27de3e11d52c4962a3a81dbb3d69365e1cf3394a67c2b23",
+    "files": [
+      "cardio_train.csv"
+    ],
+    "status": "downloaded"
+  },
+  {
+    "dataset": "early_diabetes",
+    "url": "https://archive.ics.uci.edu/static/public/529/early+stage+diabetes+risk+prediction+dataset.zip",
+    "downloaded_at": "2026-10-22",
+    "bytes": 34828,
+    "sha256": "67594c0f11257688b57493798e70737b7156ba37a2e6ac75507ae3a35221a388",
+    "files": [
+      "diabetes_data_upload.csv"
+    ],
+    "status": "downloaded"
+  },
+  {
+    "dataset": "heart_disease",
+    "url": "https://archive.ics.uci.edu/static/public/45/heart+disease.zip",
+    "downloaded_at": "2026-10-22",
+    "bytes": 128894,
+    "sha256": "b17cd273da9ce1caa4710fce80227ea454d4dbf9fcbc8e6a9121672751563adc",
+    "files": [
+      "Index",
+      "WARNING",
+      "ask-detrano",
+      "bak",
+      "cleve.mod",
+      "cleveland.data",
+      "costs/",
+      "costs/Index",
+      "costs/heart-disease.README",
+      "costs/heart-disease.cost",
+      "costs/heart-disease.delay",
+      "costs/heart-disease.expense",
+      "costs/heart-disease.group",
+      "heart-disease.names",
+      "hungarian.data",
+      "long-beach-va.data",
+      "new.data",
+      "processed.cleveland.data",
+      "processed.hungarian.data",
+      "processed.switzerland.data",
+      "processed.va.data",
+      "reprocessed.hungarian.data",
+      "switzerland.data"
+    ],
+    "status": "downloaded"
+  }
+]

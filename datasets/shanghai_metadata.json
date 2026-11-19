@@ -1,0 +1,26 @@
+[
+  {
+    "id": 21600933,
+    "title": "diabetes_datasets.zip",
+    "doi": "10.6084/m9.figshare.21600933.v5",
+    "handle": "",
+    "url": "https://api.figshare.com/v2/articles/21600933",
+    "published_date": "2023-10-30T02:11:23Z",
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "https://api.figshare.com/v2/account/articles/21600933",
+    "url_public_api": "https://api.figshare.com/v2/articles/21600933",
+    "url_private_html": "https://figshare.com/account/articles/21600933",
+    "url_public_html": "https://figshare.com/articles/dataset/diabetes_datasets_zip/21600933",
+    "timeline": {
+      "posted": "2023-10-30T02:11:23",
+      "firstOnline": "2022-11-22"
+    },
+    "resource_title": null,
+    "resource_doi": null,
+    "created_date": "2023-10-30T02:11:23Z",
+    "modified_date": "2023-10-30T02:11:24Z"
+  }
+]
