@@ -340,7 +340,6 @@ The adapter bypasses all of this: it returns JSON and stores nothing, so a platf
 - `artifacts/` and `datasets/` are not versioned in this snapshot, so a fresh clone cannot produce predictions until the model files are supplied.
 - The author code package (`hypertension_source/`) is **not redistributed** here: [`ATTRIBUTION.md`](ATTRIBUTION.md) and `paper_models/SOURCES.md` document its provenance and how to obtain it.
 - Authentication is a single shared token plus an optional browser session. There are no per-user accounts, scopes, rate limits or audit trail on the adapter endpoint.
-- Runtime error strings returned in JSON are currently Chinese; only the documentation is English.
 - `validation/` is a manual check page. It is not the integration target, and the API works without it.
 - The systemd unit, nginx snippet and Docker files are templates for the deploying party: adjust paths, user and environment file to the target host.
 - Python 3.12 and 3.13 are the supported interpreters.

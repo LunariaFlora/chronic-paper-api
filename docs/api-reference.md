@@ -200,7 +200,7 @@ The service returns a uniform error body `{"error": "readable message"}`:
 - 422: required parameter missing, wrong type or wrong value; `details` names the offending fields
 - 500: service failure
 
-The readable `error` strings emitted by the reference implementation are currently Chinese.
+The `error` field carries a short message for the operator; the machine-readable `code` field is the one to branch on.
 
 ## Out of scope for this API
 
