@@ -12,4 +12,4 @@ Foreground startup, inputs and outputs are described in the repository README. T
 
 Adjust the service definition when you use a different directory or account. For direct external access, set `CHRONIC_HOST=0.0.0.0` in the environment file and configure a token; when the service is reached through a reverse proxy on the same host, `127.0.0.1` can stay.
 
-The shell and Python entry points were verified in this delivery. The systemd template and the Docker files are provided for the deploying party and were not installed on their server as part of this work.
+The shell and Python entry points are the supported start path. The systemd template and the Docker files are starting points: set the directory, service account and environment file to match the target host before installing them.

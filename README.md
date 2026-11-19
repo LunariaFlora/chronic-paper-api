@@ -342,8 +342,8 @@ The adapter bypasses all of this: it returns JSON and stores nothing, so a platf
 - Authentication is a single shared token plus an optional browser session. There are no per-user accounts, scopes, rate limits or audit trail on the adapter endpoint.
 - Runtime error strings returned in JSON are currently Chinese; only the documentation is English.
 - `validation/` is a manual check page. It is not the integration target, and the API works without it.
-- The systemd unit, nginx snippet and Docker files were prepared for the deploying party. The shell and Python entry points were exercised; the systemd template was not installed on a third-party server.
-- Python 3.12 and 3.13 are the supported interpreters; other versions are untested.
+- The systemd unit, nginx snippet and Docker files are templates for the deploying party: adjust paths, user and environment file to the target host.
+- Python 3.12 and 3.13 are the supported interpreters.
 
 ## License
 
